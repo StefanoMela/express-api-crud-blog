@@ -50,8 +50,8 @@ const show = (req, res) => {
     })
 }
 
-const createSlug = (title) => {
-    const baseSlug = title.replaceAll(' ', '-').toLowerCase().replaceAll('/', '');
+const createSlug = (name) => {
+    const baseSlug = name.replaceAll(' ', '-').toLowerCase().replaceAll('/', '');
     const slugs = dbPosts.map(p => p.slug);
     let counter = 1;
     let slug = baseSlug;
@@ -63,12 +63,15 @@ const createSlug = (title) => {
 }
 
 const create = (req, res) => {
-    const {title, content, tags} = req.body;
+    const prova = req.file;
+    console.log(prova);
+    const {title, content, image, tags} = req.body;
     const slug = createSlug(title)
     const newPost = {
         title,
         content,
         tags,
+        image,
         slug
     }
     dbPosts.push(newPost);

@@ -11,8 +11,7 @@ app.use(express.urlencoded({extended:true}));
 const postRouter = require('./routers/post');
 
 // import data
-const dbPosts = require('./data/db.js');
-const exp = require('constants');
+const dbPosts = require('./data/db.json');
 
 // app Express
 app.get('/', (req, res) =>{
@@ -30,7 +29,6 @@ app.get('/', (req, res) =>{
     indexContent += `</ul>`;
     res.send(indexContent);
 });
-
 app.use('/posts', postRouter)
 
 app.listen(3000, () => {

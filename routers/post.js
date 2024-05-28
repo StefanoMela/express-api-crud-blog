@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/posts');
+const multer = require('multer');
+const uploader = multer({dest: 'public/img'})
 
 router.get('/', postController.index);
 
-router.post('/create/', postController.create)
+router.post('/create/', uploader.single('image'), postController.create)
 
 router.get('/:slug', postController.show)
 
