@@ -71,7 +71,8 @@ const create = (req, res) => {
         tags,
         slug
     }
-    updateDBFile([...dbPosts, newPost]);
+    dbPosts.push(newPost);
+    updateDBFile(dbPosts);
     res.format({
         html: () => {
             res.redirect(`/posts/${newPost.slug}`)
