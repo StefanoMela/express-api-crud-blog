@@ -10,8 +10,8 @@ router.post('/create/', uploader.single('image'), postController.create)
 
 router.get('/:slug', postController.show)
 
-router.get('/:slug/download', postController.download)
+router.delete('/:slug', postController.destroy);
 
-// router.delete('/:slug', middleware, postController.destroy);
+router.get('/:slug/download', postController.download)
 
 module.exports = router;

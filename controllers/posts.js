@@ -1,6 +1,7 @@
 // imports
 const dbPosts = require('../data/db.json')
 const path = require("path");
+const fs = require("fs");
 const { updateDBFile } = require('../utils.js');
 
 
@@ -94,13 +95,25 @@ const download = (req, res) => {
     res.download(downloadPath);
 }
 
-const destroy = (req, res) => {
 
-} 
+const deletePublicFile = (fileName) => {
+    const filePath = path.join(__dirname, '../public/img/', fileName);
+    fs.unlinkSync(filePath);
+}
+
+const destroy = (req, res) => {
+    const {slug} = req.params;
+    const fileToDelete = dbPosts.find(file => file.slug === slug);
+    !fileToDelete ? res.status(404).send(`Non esiste un post con titolo ${slug}`) : deletePublicFile(fileToDelete.image);
+    updateDBFile(dbPosts.filter(post => post.slug !== fileToDelete.slug ));
+
+    res.send(`Post con titolo ${slug} eliminato con successo`)
+}
 
 module.exports = {
     index,
     show,
     create,
     download,
+    destroy,
 }
